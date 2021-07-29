@@ -9,7 +9,7 @@ foreach ($computer in $computers) {
 
     echo $computer
     echo "--------"
-    echo "UNINSTALLING:"
+    echo " "
 
 $bloats = @()
 
@@ -31,13 +31,19 @@ $bloats += Invoke-Command -cn $computer {Get-ItemProperty HKCU:\Software\Microso
 }
 else
 {
-    echo "This computer appears to not have any per-user software installed."    
+    echo "This computer has no local user software installed"    
 }
 
 echo "-------"
 
+
+
+If($bloats.Length -ne '0')
+{
 Foreach($bloat in $bloats) {
 
+    echo "UNINSTALLING:"
+    echo " "
 
 if ($bloat.uninstallstring -ne $null -and $bloat.uninstallstring.Contains("{") -and $bloat.uninstallstring -notlike "*C:\*")
 {
@@ -58,20 +64,18 @@ if ($bloat.uninstallstring -ne $null -and $bloat.uninstallstring.Contains("{") -
 elseif($bloat.uninstallstring -eq $null)
 {
     echo $bloat.DisplayName "appears to NOT have an uninstall string at all. This means it likely does not function."
-
-    "$bloat.pscomputername, $bloat.displayname, does not have an uninstall string." | out-file -filepath C:\users\cwalker\Desktop\norunnies.txt -append 
 }
 elseif($bloat.uninstallstring -like "*C:\*") 
 {
     echo $bloat.displayname  "utilizes an exe as its uninstaller, and thus cannot reliably be silently uninstalled. :("
 
-    "$bloat.pscomputername, $bloat.displayname, uses executables" | out-file -filepath C:\users\cwalker\Desktop\norunnies.txt -append 
-
 }
 
 
 
 }
+
+
 
 $bloatier = @()
 
@@ -100,6 +104,8 @@ if($bloatier -ne $null)
 echo "the following are still in the registry: "
 echo " "
 
+$bloatier | Export-Csv -Append C:\Users\cwalker\onesthatdidntdo.csv
+
 foreach($bloat in $bloatier)
 {
 echo $bloat.DisplayName
@@ -111,6 +117,11 @@ else
 echo "UNINSTALLATION PRESUMABLY SUCESSFUL"    
 }
 
+
+}else 
+{
+    echo "Device appears to have no bloat!"
+}
 
 echo " "
 echo "*******************************"
