@@ -1,6 +1,6 @@
 
 $badname = "Dell"
-$computers = get-content C:\Users\cwalker\Desktop\upstairsguys.txt
+$computers = get-content C:\Users\cwalker\Desktop\ICorpComputers.txt
 $butignore = "WLAN"
 
 
@@ -40,10 +40,11 @@ echo "-------"
 
 If($bloats.Length -ne '0')
 {
-Foreach($bloat in $bloats) {
 
     echo "UNINSTALLING:"
     echo " "
+
+Foreach($bloat in $bloats) {
 
 if ($bloat.uninstallstring -ne $null -and $bloat.uninstallstring.Contains("{") -and $bloat.uninstallstring -notlike "*C:\*")
 {
@@ -90,6 +91,7 @@ echo "Verifying uninstall.."
 $bloatier += Invoke-Command -cn $computer {Get-ItemProperty HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | where {$_.Publisher -like "*$using:badname*"  -and $_.DisplayName -notlike "*$using:butignore*" -and $_.displayname -notlike "*driver*"}  | select DisplayName}
 
 echo "Verifying uninstall..."
+
 if (Invoke-Command -cn $computer {Test-Path -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*})
 { 
 $bloatier += Invoke-Command -cn $computer {Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | where {$_.Publisher -like "*$using:badname*"  -and $_.DisplayName -notlike "*$using:butignore*" -and $_.displayname -notlike "*driver*"}  | select DisplayName}
@@ -104,7 +106,7 @@ if($bloatier -ne $null)
 echo "the following are still in the registry: "
 echo " "
 
-$bloatier | Export-Csv -Append C:\Users\cwalker\onesthatdidntdo.csv
+$bloatier | Export-Csv -Append C:\Users\cwalker\Desktop\onesthatdidntdo.csv
 
 foreach($bloat in $bloatier)
 {

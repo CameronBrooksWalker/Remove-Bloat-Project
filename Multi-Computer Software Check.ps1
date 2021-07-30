@@ -1,7 +1,7 @@
 
-$badname = "dell"
-$computers = get-content C:\Users\cwalker\Desktop\upstairsguys.txt
-$outfile = "c:\users\cwalker\desktop\dellonupstairsafterrunning.csv"
+$badname = ""
+$computers = get-content C:\Users\cwalker\Desktop\allcomputers.txt
+$outfile = "c:\users\cwalker\desktop\listofinstalledsoftware.csv"
 $butignore = "shitfuck" #PUT SOMETHING HERE IF YOU DONT USE IT OR IT WONT GRAB ANYTHING
 
 
