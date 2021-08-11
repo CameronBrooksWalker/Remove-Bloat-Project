@@ -2,6 +2,7 @@
 $badname = "Dell"
 $computers = get-content C:\Users\cwalker\Desktop\ICorpComputers.txt
 $butignore = "WLAN"
+$outfile = "C:\Users\cwalker\Desktop\onesthatdidntdo.csv"
 
 
 foreach ($computer in $computers) {
@@ -106,7 +107,7 @@ if($bloatier -ne $null)
 echo "the following are still in the registry: "
 echo " "
 
-$bloatier | Export-Csv -Append C:\Users\cwalker\Desktop\onesthatdidntdo.csv
+$bloatier | Export-Csv $outfile -notypeinformation -Append
 
 foreach($bloat in $bloatier)
 {
