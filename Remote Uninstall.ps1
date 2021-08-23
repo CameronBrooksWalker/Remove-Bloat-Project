@@ -1,6 +1,6 @@
 
 $badname = "Dell"
-$computers = get-content C:\Users\cwalker\Desktop\ICorpComputers.txt
+$computers = get-content C:\Users\cwalker\Desktop\AllComputers.txt
 $butignore = "WLAN"
 $outfile = "C:\Users\cwalker\Desktop\onesthatdidntdo.csv"
 

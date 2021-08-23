@@ -1,7 +1,7 @@
 
-$badname = ""
+$badname = "Dell"
 $computers = get-content C:\Users\cwalker\Desktop\allcomputers.txt
-$outfile = "c:\users\cwalker\desktop\listofinstalledsoftware.csv"
+$outfile = "c:\users\cwalker\desktop\dellallremaining.csv"
 $butignore = "ignorestring" #PUT SOMETHING HERE IF YOU DONT USE IT OR IT WONT GRAB ANYTHING
 
 
